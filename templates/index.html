@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Terminal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+</head>
+<body>
+    <h1>Web Terminal</h1>
+    <input type="text" id="command" placeholder="Nhập lệnh...">
+    <button onclick="sendCommand()">Gửi</button>
+    <pre id="output"></pre>
+
+    <script>
+        var socket = io();
+        function sendCommand() {
+            var cmd = document.getElementById("command").value;
+            socket.emit("command", cmd);
+        }
+        socket.on("output", function(data) {
+            document.getElementById("output").textContent += data + "\n";
+        });
+    </script>
+</body>
+</html>
